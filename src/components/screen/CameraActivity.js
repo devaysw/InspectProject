@@ -6,10 +6,10 @@ import {
   Text,
   Image,
   TouchableHighlight,
-  View
+  View,
+  FlatList
 } from "react-native";
 import { RNCamera as Camera } from "react-native-camera";
-import GridView from 'react-native-grid-view';
 // path: null
 //      this.setState({ path: data.uri });
 
@@ -53,13 +53,12 @@ export class CameraActivity extends Component {
 
       renderImage() {
         return (
-          <View>
-           <GridView
-        items={this.state.path}
-        itemsPerRow={3}
-        renderItem={this.renderItem}
-        style={styles.listView}
-             />
+          <View style={styles.container}>
+     <FlatList 
+              data={this.state.path}
+              renderItem = {this.renderItem}
+              keyExtractor = {(index)=>{return index}}
+              />
           </View>
         );
       }
@@ -91,6 +90,7 @@ export class CameraActivity extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection:"column",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#000"
