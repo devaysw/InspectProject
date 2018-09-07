@@ -10,6 +10,7 @@ import {
   FlatList
 } from "react-native";
 import { RNCamera as Camera } from "react-native-camera";
+import { ListItem } from "react-native-elements";
 // path: null
 //      this.setState({ path: data.uri });
 
@@ -44,7 +45,7 @@ export class CameraActivity extends Component {
           datas.push(data.uri);
           this.setState({ path: datas });
           // this.props.updateImage(data.uri);
-          // console.log('Path to image: ' + data.uri);
+          console.log('Path to image: ' + data.uri);
         } catch (err) {
           console.log('err: ', err);
         }
@@ -56,7 +57,11 @@ export class CameraActivity extends Component {
           <View style={styles.container}>
      <FlatList 
               data={this.state.path}
-              renderItem = {this.renderItem}
+              renderItem = {(item)=>{
+                console.log("ayesha is beutiful "+{item});
+                return <Image source={{uri:{item}}} style={{width:100,height:100}} />
+                }
+              }
               keyExtractor = {(index)=>{return index}}
               />
           </View>
@@ -77,11 +82,34 @@ export class CameraActivity extends Component {
     </View>
   );
 
+  renderCamera() {
+    return (
+      <Camera
+        ref={(cam) => {
+          this.camera = cam;
+        }}
+        style={styles.preview}
+        flashMode={Camera.Constants.FlashMode.off}
+        permissionDialogTitle={'Permission to use camera'}
+        permissionDialogMessage={'We need your permission to use your camera phone'}
+      >
+        <TouchableHighlight
+          style={styles.capture}
+          onPress={this.takePicture.bind(this)}
+          underlayColor="rgba(255, 255, 255, 0.5)"
+        >
+          <View />
+        </TouchableHighlight>
+      </Camera>
+    );
+  }
+
+
   
   render() {
         return (
           <View style={styles.container}>
-            {this.state.path ? this.renderImage() : this.renderCamera()}
+            {this.state.path.length>0 ? this.renderImage() : this.renderCamera()}
           </View>
         );
   }
@@ -91,9 +119,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#000"
+    alignItems:"center",
   },
   preview: {
     flex: 1,
