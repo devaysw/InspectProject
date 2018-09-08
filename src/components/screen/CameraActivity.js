@@ -41,9 +41,7 @@ export class CameraActivity extends Component {
         try {
           const data = await this.camera.takePictureAsync();
           const datas=this.state.path;
-          const image;
-          image.image=data.uri;
-          
+          const image=data.uri;
           datas.push(image);
           this.setState({ path: datas });
           this.setState(
