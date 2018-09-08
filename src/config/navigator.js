@@ -31,7 +31,7 @@ export  const Tabs = TabNavigator({
         screen: Music,
         navigationOptions:{
             tabBarLabel:'Music',
-            tabBarIcon:()=>  {return <Icon name ="pizza" color ={"white"} size={20}/>}
+            tabBarIcon:()=>  {return <Icon name ="local-pizza" color ={"white"} size={20}/>}
           }
     }
 },{
@@ -47,7 +47,6 @@ export  const Tabs = TabNavigator({
             width: 100 + "%",
             height:56,
             backgroundColor: '#4586e0',
-             activeTintColor:'#fff',
             activeBackgroundColor:'#fff'
           },
           indicatorStyle: {

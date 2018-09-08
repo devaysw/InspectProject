@@ -35,6 +35,7 @@ export class CameraActivity extends Component {
     super(props);
     this.state = {
       path: [],
+      capture:false,
     };
   }
 
@@ -44,6 +45,11 @@ export class CameraActivity extends Component {
           const datas=this.state.path;
           datas.push(data.uri);
           this.setState({ path: datas });
+          this.setState(
+            {
+              capture:false
+            }
+          )
           // this.props.updateImage(data.uri);
           console.log('Path to image: ' + data.uri);
         } catch (err) {
@@ -58,8 +64,9 @@ export class CameraActivity extends Component {
      <FlatList 
               data={this.state.path}
               renderItem = {(item)=>{
-                console.log("ayesha is beutiful "+{item});
-                return <Image source={{uri:{item}}} style={{width:100,height:100}} />
+                
+                console.log("ayesha is beutiful "+JSON.stringify(item.item));
+                return <Image source={{uri:item.item}} style={{width:100,height:100}} />
                 }
               }
               keyExtractor = {(index)=>{return index}}
@@ -108,8 +115,24 @@ export class CameraActivity extends Component {
   
   render() {
         return (
+        
           <View style={styles.container}>
-            {this.state.path.length>0 ? this.renderImage() : this.renderCamera()}
+          {this.state.capture?
+         this.renderCamera()
+          :
+          <View style={styles.previewContainer}>
+          <View style={styles.title}>
+            <Text style={styles.text}>
+              TextInput
+            </Text>
+            <TouchableHighlight style={styles.button } onPress={() => {this.setState({capture:true})}}>
+              <Text style={styles.buttontext}>CAPTURE</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={styles.grid}>
+          {this.renderImage()}
+          </View>
+          </View>}
           </View>
         );
   }
@@ -120,6 +143,40 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:"column",
     alignItems:"center",
+  },
+  text:{
+    padding: 10,
+    fontSize: 14,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    color: "black",
+    textAlignVertical:'center',
+  },
+  buttontext:{
+    padding: 10,
+    fontSize: 14,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    color: "black",
+    textAlign:"center",
+  },
+  title:{
+    alignSelf:'stretch',
+    borderWidth:1,
+    borderColor:"#0FF",
+    flexDirection:"row",
+
+  },
+  button:{
+    width:130,
+    alignSelf:"flex-end"
+  },
+  grid : {
+    flex:1,
+  },
+  previewContainer:{
+      flex:1,
+    flexDirection:"column",
   },
   preview: {
     flex: 1,

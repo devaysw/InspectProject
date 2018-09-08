@@ -90,7 +90,7 @@ class Movies extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.loginInput}>
           <Input
-            leftIcon={<Icon name="email-open" color="black" size={25} />}
+            leftIcon={<Icon name="building-o" color="black" size={25} />}
             inputStyle={{ marginLeft: 10, color: "black" }}
             keyboardAppearance="light"
             placeholder="Institute"
@@ -106,7 +106,7 @@ class Movies extends Component {
 
         <View style={styles.loginInput}>
           <Input
-            leftIcon={<Icon name="email-open" color="black" size={25} />}
+            leftIcon={<Icon name="address-book" color="black" size={25} />}
             inputStyle={{ marginLeft: 10, color: "black" }}
             placeholder="Institute Address"
             numberOfLines={3}
@@ -114,7 +114,7 @@ class Movies extends Component {
             multiline
             autoCapitalize="none"
             autoCorrect={false}
-            keyboardType="text"
+            keyboardType="default"
             returnKeyType="next"
             blurOnSubmit={false}
             placeholderTextColor="black"
@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     fontSize: 16,
-    textAlign: "center",
     color: "#ffffff"
   },
   
@@ -223,7 +222,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     left:350,
     top: 0,
-    textAlign:'center'
    
   },
   card:{

@@ -30,7 +30,7 @@ export class ItemMenuDetail extends Component {
 
       <FlatList
           data={data}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => {return index}}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => this.itemClicked(item)}>
             
