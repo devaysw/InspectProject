@@ -41,7 +41,10 @@ export class CameraActivity extends Component {
         try {
           const data = await this.camera.takePictureAsync();
           const datas=this.state.path;
-          const image=data.uri;
+          const uri=data.uri;
+          const image={
+            img:{uri}
+          };
           datas.push(image);
           this.setState({ path: datas });
           this.setState(
@@ -65,7 +68,7 @@ export class CameraActivity extends Component {
               renderItem = {(item)=>{
                 
                 console.log("ayesha is beutiful "+JSON.stringify(item.item));
-                return <Image source={{uri:item.item}} style={{width:100,height:100}} />
+                return <Image source={{uri:item.item.img}} style={{width:100,height:100}} />
                 }
               }
               keyExtractor = {(index)=>{return index}}
@@ -83,7 +86,7 @@ export class CameraActivity extends Component {
     <View style={styles.item}>
       <View style={styles.flex} />
 
-      // <Image source={{isStatic:true, uri: item }} resizeMode='cover'  />
+      // <Image source={{isStatic:true, uri: item.item.img }} resizeMode='cover'  />
   
     </View>
   );
