@@ -21,13 +21,10 @@ class ImageView extends Component{
       <View style={styles.imageView}>
         <Image 
           source={{uri:this.props.datas.item.data}}
-          style={styles.image}
-          />
-
-      </View>
+          style={styles.image}/>
+           </View>
     );
   }
-
 }
 
 export class CameraActivity extends Component {
@@ -36,6 +33,7 @@ export class CameraActivity extends Component {
     this.state = {
       path: [],
       capture:false,
+      index:-1,
     };
   }
 
@@ -43,7 +41,10 @@ export class CameraActivity extends Component {
         try {
           const data = await this.camera.takePictureAsync();
           const datas=this.state.path;
-          datas.push(data.uri);
+          const image;
+          image.image=data.uri;
+          
+          datas.push(image);
           this.setState({ path: datas });
           this.setState(
             {
@@ -111,10 +112,23 @@ export class CameraActivity extends Component {
     );
   }
 
+  sendToBack=()=>{
+      this.props.navigation.state.params.onDone(this.state.path,this.state.index);
+     // this.goBack();
+     this.props.navigation.goBack(null);
+    }
 
   
   render() {
-        return (
+    const { params } = this.props.navigation.state;
+    
+    const item =params.item;
+    const index=params.index;
+    console.log("Value from previous : "+JSON.stringify(params));
+    this.state.index=index;
+    
+    
+    return (
         
           <View style={styles.container}>
           {this.state.capture?
@@ -128,6 +142,9 @@ export class CameraActivity extends Component {
             <TouchableHighlight style={styles.button } onPress={() => {this.setState({capture:true})}}>
               <Text style={styles.buttontext}>CAPTURE</Text>
             </TouchableHighlight>
+            <TouchableHighlight style={styles.button } onPress={() => {this.sendToBack()}}>
+            <Text style={styles.buttontext}>SUBMIT</Text>
+          </TouchableHighlight>
           </View>
           <View style={styles.grid}>
           {this.renderImage()}
