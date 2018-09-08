@@ -6,70 +6,112 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Alert
+  Alert,
+  CheckBox,
 } from "react-native";
-import { Right ,Left } from "native-base";
+import { Right, Left } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+
+
 
 export class ItemMenuDetail extends Component {
 
-  constructor(props){
-    super(props); 
-    this.state={
-      areaModel:[]  
+  constructor(props) {
+    super(props);
+    this.state = {
+      areaModel: [],
+      isFromPrevious: false,
+      showCheckbox:false,
+    };
+  }
+
+  itemClicked = (index, item) => {
+    if(!this.state.showCheckbox){
+    this.props.navigation.navigate("Camera", {
+      item, index, onDone: (item, index) => {
+        const areaModelTemp = this.state.areaModel;
+        const m = areaModelTemp[index];
+        console.log("Item from CameraActivity To ItemMenuDetail:"+JSON.stringify(item));
+        if (item.length > 0) {
+
+          m.images = item;
+          //this.state.areaModel=areaModel;
+          this.setState({
+            areaModel: areaModelTemp,
+          });
+
+          console.log("Filled Data :" + JSON.stringify(this.state.areaModel));
+        }
+      }
+    });
+  }else{
+    const item=this.state.areaModel[index];
+    item.isChecked=!item.isChecked;
+    this.setState({
+      state:this.state,
+    })
+  }
+
   };
-}
+  onCheckboxChange=(index)=>{
+    const item=this.state.areaModel[index];
+    item.isChecked=!item.isChecked;
+    
+  };
 
-  itemClicked = (index,item) =>
-  {
-    alert("Cliked");
-    this.props.navigation.navigate("Camera", { item,index,onDone:(item,index) =>{
-      const areaModel=this.state.areaModel;
-      const m=areaModel[index];
-      m.images=item;
-      this.state.areaModel=areaModel;
-      console.log("Filled Data :"+JSON.stringify(this.state.areaModel));
-    } });  
-
-};
-
-setIcons =(item) =>{
-  item.images?
-  "green"
-  :
-  "gray"
-};
-  
   render() {
     const { params } = this.props.navigation.state;
-    
-    const item =params.item;
+
+    const item = params.item;
     const data = item.AreaModel;
-    this.state.areaModel=data;
-   
+    this.state.areaModel = data;
+    console.log("data:->"+JSON.stringify(item));
+      this.state.showCheckbox=item.checkbox;
+    console.log("isChecked:-> "+this.state.showCheckbox);
+    {/* {
+                    item.images?
+                    <Icon name="check" color="green" size={16} /> 
+                    :
+                    <Icon name="check" color="gray" size={16} /> 
+                  } */}
     return (
       <View style={styles.mainContainer}>
 
-      <FlatList
+        <FlatList
           data={this.state.areaModel}
-          keyExtractor={(item, index) => {return index}}
-          renderItem={({ index,item }) => (
-            <TouchableOpacity onPress={() => this.itemClicked(index,item)}>
-            
-              <Text style={styles.item}>{item.text}</Text>
-             
-              <Right style={styles.topLeft}>
-              <Icon name="check" color={this.setIcons(item)} size={16} /> 
-              
-              </Right>
-
+          extraData={this.state}
+          keyExtractor={(item, index) => { return index.toString() }}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity onPress={() => this.itemClicked(index, item)}>
               <View
                 style={{
                   paddingVertical: 10,
                   borderTopWidth: 1,
+                  flexDirection: "row",
                   borderColor: "#CED0CE"
                 }}
-              />
+              >
+                <Text style={styles.item}>{item.text}</Text>
+                
+                <Right style={styles.topLeft}>
+                  {
+                    this.state.showCheckbox?
+                    <CheckBox
+                    value={item.isChecked}
+                    onValueChange={() => this.onCheckboxChange(index)}
+                    />
+                  :
+                    item.images ?
+                      <Icon name="check" color="green" size={16} />
+                      :
+                      <Icon name="check" color="gray" size={16} />
+                  
+                }
+                </Right>
+
+
+              </View>
             </TouchableOpacity>
           )}
         />
@@ -85,7 +127,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: 10,
     marginRight: 10,
-    width: 100 + "%",
     flex: 10
   },
   item: {
@@ -93,17 +134,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Roboto",
     fontWeight: "bold",
+    flex: 1,
     color: "black",
-    textAlignVertical:'center'
-   
-  
+    textAlignVertical: 'center'
+
+
+  },
+  rendercontainer: {
+    flexDirection: "row",
+    borderColor: "red",
+    borderWidth: 1,
+    marginRight: 10,
   },
   topLeft: {
-    position: "absolute",
-    left: 350,
-    top: 10,
-    justifyContent:'center'
+    flex: 0,
+
   },
 
- 
+
 });

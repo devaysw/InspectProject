@@ -68,7 +68,7 @@ export class CameraActivity extends Component {
               renderItem = {(item)=>{
                 
                 console.log("ayesha is beutiful "+JSON.stringify(item.item));
-                return <Image source={{uri:item.item.img}} style={{width:100,height:100}} />
+                return <Image source={{uri:item.item.img.uri}} style={{width:100,height:100}} />
                 }
               }
               keyExtractor = {(index)=>{return index}}
@@ -127,7 +127,11 @@ export class CameraActivity extends Component {
     const index=params.index;
     console.log("Value from previous : "+JSON.stringify(params));
     this.state.index=index;
+    if(item.images){
+      const images=item.images;
+      this.state.path=images;
     
+    }
     
     return (
         

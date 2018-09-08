@@ -59,6 +59,8 @@ const menuData = [
   },
   {
     key: "Facilities",
+    isChecked:false,
+    checkbox:true,
     AreaModel: [
       {
         text: "Ramp/Lift",
