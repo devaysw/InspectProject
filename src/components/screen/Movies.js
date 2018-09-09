@@ -21,6 +21,9 @@ import {  Card } from 'react-native-elements';
 // });
 // NHI hai mu=ain kuch aur kr rahi thi usska  hai wo
 
+const instituteDetailHTML='<table style="margin-left: auto; margin-right: auto;"><tbody><tr><td style="text-align: right;">Institute Name&nbsp;</td><td>*institutename#</td></tr><tr><td style="text-align: right;">Institute Address</td><td>*Address#</td></tr></tbody></table>';
+
+
 const menuData = [
   {
     key: "Conselling Area",

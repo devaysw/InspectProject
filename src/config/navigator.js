@@ -47,7 +47,6 @@ export  const Tabs = TabNavigator({
             width: 100 + "%",
             height:56,
             backgroundColor: '#4586e0',
-            activeBackgroundColor:'#fff'
           },
           indicatorStyle: {
             backgroundColor: '#4586e0'

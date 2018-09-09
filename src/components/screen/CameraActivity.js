@@ -7,7 +7,8 @@ import {
   Image,
   TouchableHighlight,
   View,
-  FlatList
+  FlatList,
+  Button
 } from "react-native";
 import { RNCamera as Camera } from "react-native-camera";
 import { ListItem } from "react-native-elements";
@@ -34,6 +35,7 @@ export class CameraActivity extends Component {
       path: [],
       capture:false,
       index:-1,
+      title:null,
     };
   }
 
@@ -127,6 +129,7 @@ export class CameraActivity extends Component {
     const index=params.index;
     console.log("Value from previous : "+JSON.stringify(params));
     this.state.index=index;
+    this.state.title=item.text;
     if(item.images){
       const images=item.images;
       this.state.path=images;
@@ -142,14 +145,14 @@ export class CameraActivity extends Component {
           <View style={styles.previewContainer}>
           <View style={styles.title}>
             <Text style={styles.text}>
-              TextInput
+              {this.state.title}
             </Text>
-            <TouchableHighlight style={styles.button } onPress={() => {this.setState({capture:true})}}>
-              <Text style={styles.buttontext}>CAPTURE</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.button } onPress={() => {this.sendToBack()}}>
-            <Text style={styles.buttontext}>SUBMIT</Text>
-          </TouchableHighlight>
+            <Button style={styles.button } onPress={() => {this.setState({capture:true})}} title="CAPTURE">
+              {/* <Text style={styles.buttontext}>CAPTURE</Text> */}
+            </Button>
+            <Button style={styles.button} onPress={() => {this.sendToBack()}} title="SUBMIT">
+            {/* <Text style={styles.buttontext}>SUBMIT</Text> */}
+            </Button>
           </View>
           <View style={styles.grid}>
           {this.renderImage()}
@@ -164,7 +167,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection:"column",
-    alignItems:"center",
   },
   text:{
     padding: 10,
@@ -183,22 +185,24 @@ const styles = StyleSheet.create({
     textAlign:"center",
   },
   title:{
-    alignSelf:'stretch',
     borderWidth:1,
     borderColor:"#0FF",
     flexDirection:"row",
-
+    flex:0,
+    marginRight:10,
+    justifyContent: 'space-between',
   },
   button:{
     width:130,
-    alignSelf:"flex-end"
+    backgroundColor:"#2196F3",
   },
   grid : {
     flex:1,
   },
   previewContainer:{
       flex:1,
-    flexDirection:"column",
+      alignSelf:"stretch",
+      flexDirection:"column",
   },
   preview: {
     flex: 1,
