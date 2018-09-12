@@ -27,13 +27,11 @@ const RootStack = createStackNavigator(
  export class MenuList extends Component {
   render() {
     return (
-     
       <RootStack/>
-     
-     ); 
+    ); 
   }
-
 }
+
 const styles = StyleSheet.create({
   text: {
     fontSize: 20,
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 100 + "%",
     flex: 1
-  },
+  }
   
 });
 

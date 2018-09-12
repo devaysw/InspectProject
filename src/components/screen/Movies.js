@@ -106,7 +106,7 @@ class Movies extends Component {
             blurOnSubmit={false}
             placeholderTextColor="black"
             errorStyle={{ textAlign: "center", fontSize: 12 }}
-          />
+         />
         </View>
 
         <View style={styles.loginInput}>
@@ -124,28 +124,25 @@ class Movies extends Component {
             blurOnSubmit={false}
             placeholderTextColor="black"
             errorStyle={{ textAlign: "center", fontSize: 12 }}
-          />
+            />
         </View>
 
         <View style={styles.loginInput}>
           <Button style={styles.buttonStyles} title="Submit" />
           </View>
          
-         
-         <View style={styles.mainContainer}>
-
+          <View style={styles.mainContainer}>
         <FlatList
-        data={menuData}
-        renderItem ={({item})=>(
-          <TouchableOpacity onPress={() => this.itemClicked(item)}>
-          <Text style={styles.item} key={item.key}>
-            {item.key}
-          </Text>
+             data={menuData}
+            renderItem ={({item})=>(
+            <TouchableOpacity onPress={() => this.itemClicked(item)}>
+            <Text style={styles.item} key={item.key}>
+                {item.key}
+            </Text>
           <Right style={styles.topLeft}>
              <Icon name='arrow-right' color='gray'size={16}/>
           </Right>
-
-          <View
+      <View
           style={{
             paddingVertical: 10,
             borderTopWidth: 1,
@@ -155,19 +152,12 @@ class Movies extends Component {
         </View>
 </TouchableOpacity>
 
-)}></FlatList>
-
-        
-         </View>
+)}>
+</FlatList>
+      </View>
           </View>
-        );
+    );
       }
-      
-          
-  
-   
-
-  
 }
 
 export default Movies;
