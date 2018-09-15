@@ -35,8 +35,7 @@ export  const Tabs = TabNavigator({
           }
     }
 },{
-
-    tabBarPosition:'bottom',
+   tabBarPosition:'bottom',
     swipeEnabled:false,
     lazy:true,
     animationEnabled:true,

@@ -13,6 +13,8 @@ import { Input, Button
 import Icon from "react-native-vector-icons/FontAwesome";
 import Toast from "react-native-simple-toast";
 import {  Card } from 'react-native-elements';
+ import InstituteService from '../../config/service/InstituteService';
+ import InstitudeModel from '../../config/db/model/InstitudeModel';
 
 // const ButtonNavigate = StackNavigator({
 //   Movies:{screen: Movies},
@@ -22,7 +24,6 @@ import {  Card } from 'react-native-elements';
 // NHI hai mu=ain kuch aur kr rahi thi usska  hai wo
 
 const instituteDetailHTML='<table style="margin-left: auto; margin-right: auto;"><tbody><tr><td style="text-align: right;">Institute Name&nbsp;</td><td>*institutename#</td></tr><tr><td style="text-align: right;">Institute Address</td><td>*Address#</td></tr></tbody></table>';
-
 
 const menuData = [
   {
@@ -85,10 +86,49 @@ const menuData = [
   }
 ];
 
+
 class Movies extends Component {
+  instituteArray =[];
+   isboolean =false;
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      institute: '',
+      address: '',
+      instituteArray:[]
+
+    }
+  }
+  submitData() {
+    if(this.state.institute!= null && this.state.institute!= " ")
+    {
+     this.isboolean=true;
+    }else{
+      this.isboolean=false;
+    }
+    if(this.state.address!= null && this.state.address!= " "){
+      this.isboolean=true
+    }else{
+      this.isboolean=false;
+    }
+    if(this.isboolean){
+      InstituteService.save(new InstitudeModel(this.state.institute,this.state.address ),
+      callback=()=>{
+          Toast.show("OnCallback",Toast.LONG);
+      })
+
+    }
+    this.props.navigation.navigate("institudeModel",{instituteArray})
+
+this.isboolean=!this.isboolean;
+  }
+
   itemClicked = item => {
     this.props.navigation.navigate("ItemMenuDetail", { item });
   };
+
 
   render() {
     return (
@@ -104,6 +144,7 @@ class Movies extends Component {
             autoCorrect={false}
             keyboardType="default"
             blurOnSubmit={false}
+            onChangeText={value=>this.state({institute: value.trim().toString})}
             placeholderTextColor="black"
             errorStyle={{ textAlign: "center", fontSize: 12 }}
          />
@@ -115,6 +156,7 @@ class Movies extends Component {
             inputStyle={{ marginLeft: 10, color: "black" }}
             placeholder="Institute Address"
             numberOfLines={3}
+            onChangeText={value=>this.state({address:value.trim().toString})}
             autoFocus={false}
             multiline
             autoCapitalize="none"
@@ -128,7 +170,7 @@ class Movies extends Component {
         </View>
 
         <View style={styles.loginInput}>
-          <Button style={styles.buttonStyles} title="Submit" />
+          <Button style={styles.buttonStyles} title="Submit" onPress={this.submitData} />
           </View>
          
           <View style={styles.mainContainer}>

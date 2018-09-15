@@ -3,11 +3,16 @@ import React, { Component } from "react";
 import { TabNavigator } from 'react-navigation';
 
   
+
+
  class Books extends Component {
   
+render() {
+  // const { params } = this.props.navigation.state;
+  // const item = params.item.item;
+  console.log("data:->"+JSON.stringify(item));
 
-  render() {
-    return <View><Text>Books</Text></View>
+    return <View><Text style ={styles.text}>Books</Text></View>
   }
 
 }

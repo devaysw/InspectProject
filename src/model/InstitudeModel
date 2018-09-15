@@ -1,0 +1,10 @@
+class InstitudeModel{
+
+    private String id;
+    private String instituteName;
+    private String address;
+
+    constructor(){
+        
+    }
+}
